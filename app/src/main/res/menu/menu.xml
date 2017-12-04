@@ -1,0 +1,27 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="mobil.commerce.travelmate" >
+
+    <item
+        android:id="@+id/routenplanung"
+        android:orderInCategory="100"
+        android:title="Routenplanung"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/reisetagebuch"
+        android:orderInCategory="100"
+        android:title="Reisetagebuch"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/meineRouten"
+        android:orderInCategory="100"
+        android:title="Meine Routen"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/gefährten"
+        android:orderInCategory="100"
+        android:title="Weggefährten"
+        app:showAsAction="never"/>
+
+</menu>

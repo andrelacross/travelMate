@@ -16,6 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".RoutePlaner"></activity>
+        <activity android:name=".MyRoutes"></activity>
+        <activity android:name=".TravelDiary"></activity>
+        <activity android:name=".Mates"></activity>
     </application>
 
 </manifest>
