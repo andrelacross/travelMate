@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="AppCompatResource">
+    <item
+        android:id="@+id/findAll"
+        android:showAsAction="ifRoom"
+        android:title="Find All"
+        android:visible="false"
+        />
+    <item
+        android:id="@+id/prevEntry"
+        android:showAsAction="ifRoom"
+        android:title="Prev Entry"
+        />
+    <item
+        android:id="@+id/nextEntry"
+        android:showAsAction="ifRoom"
+        android:title="Next Entry"
+        />
+    <item
+        android:id="@+id/today"
+        android:showAsAction="ifRoom"
+        android:title="Today"
+        />
+    <item
+        android:id="@+id/goToDate"
+        android:showAsAction="ifRoom"
+        android:title="Go to Date"
+    />
+    <item
+        android:id="@+id/search"
+        android:showAsAction="ifRoom|collapseActionView"
+        android:title="Search"
+        android:actionViewClass="android.widget.SearchView"/>
+    <item
+        android:id="@+id/addMedia"
+        android:showAsAction="ifRoom"
+        android:title="Add Media"/>
+    <item
+        android:id="@+id/editStyles"
+        android:showAsAction="ifRoom"
+        android:title="Edit Styles"
+        />
+    <item
+        android:id="@+id/settings"
+        android:showAsAction="ifRoom"
+        android:title="Settings"
+        />
+</menu>

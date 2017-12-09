@@ -1,17 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:ignore="RtlHardcoded">
 
-    <TextView
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
+        <EditText
+            android:id="@+id/text"
+            android:inputType="textCapSentences|textMultiLine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top" />
+
+    </ScrollView>
+
+    <org.billthefarmer.markdown.MarkdownView
+        android:id="@+id/markdown"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageButton
+        android:id="@+id/edit"
+        tools:ignore="UnusedAttribute"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="cause i was to drunk to remember my journeys..."
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="20dp"
-        />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_action_edit"
+        android:background="@drawable/ic_button_background"
+        android:layout_marginBottom="28dp"
+        android:layout_marginRight="28dp"
+        android:elevation="6dp" />
 
-</LinearLayout>
+    <ImageButton
+        android:id="@+id/accept"
+        tools:ignore="UnusedAttribute"
+        android:src="@drawable/ic_action_accept"
+        android:background="@drawable/ic_button_background"
+        android:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="28dp"
+        android:layout_marginRight="28dp"
+        android:elevation="6dp" />
+
+</RelativeLayout>

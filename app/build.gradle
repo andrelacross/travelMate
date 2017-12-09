@@ -28,4 +28,6 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:11.6.2'
     implementation 'com.google.android.gms:play-services-maps:11.6.2'
     implementation 'com.google.android.gms:play-services:11.6.2'
+    compile 'com.github.billthefarmer:CustomCalendarView:v1.03'
+    compile 'com.github.billthefarmer:MarkdownView:v1.0'
 }
