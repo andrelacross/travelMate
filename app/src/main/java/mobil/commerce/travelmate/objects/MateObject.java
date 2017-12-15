@@ -1,4 +1,4 @@
-package mobil.commerce.travelmate;
+package mobil.commerce.travelmate.objects;
 
 /**
  * Created by eiked on 11.12.2017.

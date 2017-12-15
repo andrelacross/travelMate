@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import mobil.commerce.travelmate.objects.MateObject;
+
 /**
  * Created by andre on 04.12.17.
  */
@@ -55,7 +57,7 @@ public class Mates extends Activity{
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(Mates.this);
-                View mView = getLayoutInflater().inflate(R.layout.add_mate, null);
+                View mView = getLayoutInflater().inflate(R.layout.search_mate_dialog, null);
                 final EditText search_name = (EditText) mView.findViewById(R.id.input_name);
                 final Button btn_ok = (Button) mView.findViewById(R.id.btn_ok);
                 btn_ok.setOnClickListener(new View.OnClickListener() {
@@ -75,9 +77,14 @@ public class Mates extends Activity{
     }
 
     private void loadMates() {
+        //Beispielfreunde laden
         mates.add(new MateObject("Name1", "name1@123.de"));
         mates.add(new MateObject("Name2", "name2@abc.de"));
         mates.add(new MateObject("Name3", "name3@xyz.de"));
+    }
+
+    private void saveMates() {
+
     }
 
 }

@@ -51,6 +51,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
+import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 
@@ -73,6 +74,8 @@ import org.billthefarmer.view.CustomCalendarDialog;
 import org.billthefarmer.view.CustomCalendarView;
 import org.billthefarmer.view.DayDecorator;
 import org.billthefarmer.view.DayView;
+
+import mobil.commerce.travelmate.objects.DiaryObject;
 
 
 public class TravelDiary extends AppCompatActivity implements DatePickerDialog.OnDateSetListener,
@@ -168,12 +171,21 @@ public class TravelDiary extends AppCompatActivity implements DatePickerDialog.O
     private View edit;
     private final int REQUEST_CODE_ASK_PERMISSIONS=123;
 
+    private ArrayList<DiaryObject> diaryList = new ArrayList<>();
+
     // onCreate
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_traveldiary);
+
+        Intent intent = getIntent();
+
+        diaryList.clear();
+        diaryList = (ArrayList) intent.getSerializableExtra("diary");
+
+
 
         textView = (EditText) findViewById(R.id.text);
         scrollView = (ScrollView) findViewById(R.id.scroll);

@@ -8,11 +8,21 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+
+import mobil.commerce.travelmate.objects.RouteObject;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -20,11 +30,14 @@ public class MainActivity extends AppCompatActivity{
 
     private static final int ERROR_DIALOG_REQUEST = 9000;
 
+    private ArrayList<RouteObject> routes = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if(isServicesOK()){
+            addExampleRoutes();
             init();
         }
 
@@ -38,6 +51,43 @@ public class MainActivity extends AppCompatActivity{
                 startActivity(intent);
             }
         });
+
+        ListView routeListView = (ListView) findViewById(R.id.listView_routes);
+        String[] routenames = new String[routes.size()];
+        for(int i = 0; i < routenames.length; i++) {
+            routenames[i] = routes.get(i).getName();
+        }
+
+        ListAdapter routesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, routenames);
+        routeListView.setAdapter(routesAdapter);
+
+        routeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent3 = new Intent(MainActivity.this, RoutePlaner.class);
+                intent3.putExtra("route", routes.get(i));
+                startActivity(intent3);
+            }
+        });
+
+        Button btn_diaryTest = (Button) findViewById(R.id.btn_diaryTest);
+        btn_diaryTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, TravelDiary.class);
+                intent.putExtra("diary", routes.get(0).getDiaryList());
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    private void addExampleRoutes() {
+        routes.clear();
+        routes.add(new RouteObject("Süd-Amerika"));
+        routes.add(new RouteObject("Schweden"));
+        routes.add(new RouteObject("Thailand"));
+
     }
 
     public boolean isServicesOK(){
