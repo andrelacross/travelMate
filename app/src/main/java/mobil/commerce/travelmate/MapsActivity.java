@@ -3,6 +3,8 @@ package mobil.commerce.travelmate;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,9 +15,12 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +42,10 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -61,6 +70,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Boolean mLocationPermissionsGranted = false;
     private GoogleMap mMap;
     private Location mLastKnownLocation;
+    private EditText mSearchText;
     // Keys for storing activity state.
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
@@ -81,18 +91,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mCameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
         }
         setContentView(R.layout.activity_maps);
+        mSearchText =  (EditText) findViewById(R.id.input_search);
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         mPlaceDetectionClient = Places.getPlaceDetectionClient(this, null);
 
 
         // Build the map.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         getLocationPermission();
 
 
+
+
+
     }
+
     /**
      * Saves the state of the map when the activity is paused.
      */
@@ -126,6 +140,52 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             showCurrentPlace();
         }
         return true;
+    }
+
+    private void init(){
+
+        Log.d(TAG, "init: initializing");
+
+        mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if(actionId == EditorInfo.IME_ACTION_SEARCH)
+                      //  || actionId == EditorInfo.IME_ACTION_DONE
+                      //  || keyEvent.getKeyCode() == KeyEvent.ACTION_DOWN
+                       // || keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER)
+                {
+
+                    Log.d(TAG, "onEditorAction: init");
+
+                    //execute our method for searching
+                    geoLocate();
+                }
+                return false;
+            }
+        });
+    }
+
+    private void geoLocate(){
+        Log.d(TAG, "geoLocate: geolocating");
+        String searchString = mSearchText.getText().toString();
+        Geocoder geocoder = new Geocoder(this);
+        List<Address> addresses = new ArrayList<>();
+        try {
+            addresses = geocoder.getFromLocationName(searchString,1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (addresses.size()>0){
+            Address address = addresses.get(0);
+            Log.d(TAG, "geoLocate: Found a location"+address.toString());
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(address.getLatitude(),address.getLongitude()),DEFAULT_ZOOM));
+            MarkerOptions markerOptions = new MarkerOptions().position(new LatLng(address.getLatitude(),address.getLongitude())).title(address.getAddressLine(0));
+            mMap.addMarker(markerOptions);
+
+        }
+
+
     }
 
     /**
@@ -286,11 +346,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Prompt the user for permission.
         getLocationPermission();
 
+
         // Turn on the My Location layer and the related control on the map.
         updateLocationUI();
 
         // Get the current location of the device and set the position of the map.
         getDeviceLocation();
+
+
     }
 
     /**
@@ -377,6 +440,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
         }
+
+        init();
+
+
+
+
+
     }
 
     /**
