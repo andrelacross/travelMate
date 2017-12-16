@@ -109,8 +109,9 @@ public class MainActivity extends AppCompatActivity{
         routeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent3 = new Intent(MainActivity.this, RoutePlaner.class);
+                Intent intent3 = new Intent(MainActivity.this, MapsActivity.class);
                 intent3.putExtra("route", routes.get(i));
+                intent3.putExtra("planer", true);
                 startActivity(intent3);
             }
         });
