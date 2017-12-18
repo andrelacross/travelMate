@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                intent.putExtra("planer", false);
                 startActivity(intent);
             }
         });
@@ -113,16 +114,6 @@ public class MainActivity extends AppCompatActivity{
                 intent3.putExtra("route", routes.get(i));
                 intent3.putExtra("planer", true);
                 startActivity(intent3);
-            }
-        });
-
-        Button btn_diaryTest = (Button) findViewById(R.id.btn_diaryTest);
-        btn_diaryTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, TravelDiary.class);
-                intent.putExtra("diary", routes.get(0).getDiaryList());
-                startActivity(intent);
             }
         });
 

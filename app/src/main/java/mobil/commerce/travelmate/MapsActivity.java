@@ -2,6 +2,7 @@ package mobil.commerce.travelmate;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -20,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -46,6 +48,8 @@ import com.google.android.gms.tasks.Task;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import mobil.commerce.travelmate.objects.RouteObject;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -82,6 +86,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private String[] mLikelyPlaceAttributions;
     private LatLng[] mLikelyPlaceLatLngs;
 
+    private RouteObject route;
+    private boolean planer = false;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +109,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         getLocationPermission();
 
 
+        Intent intent = getIntent();
+        route = (RouteObject) intent.getSerializableExtra("route");
+        planer = (Boolean) intent.getSerializableExtra("planer");
+
+        Button btn_diary = (Button) findViewById(R.id.btn_diary);
+        btn_diary.setVisibility(View.INVISIBLE);
+        if(planer) {
+            btn_diary.setVisibility(View.VISIBLE);
+            btn_diary.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(MapsActivity.this, TravelDiary.class);
+                    intent.putExtra("diary", route.getDiaryList());
+                    startActivity(intent);
+                }
+            });
+        }
 
 
 
