@@ -1710,6 +1710,7 @@ public class TravelDiary extends AppCompatActivity implements DatePickerDialog.O
         }
 
         loadMarkdown();
+        save();
     }
 
     // addLink

@@ -25,7 +25,7 @@ public class DiaryObject implements Serializable{
     }
 
     public void setText(String text) {
-        text = text;
+        this.text = text;
     }
 
     public String getName() {
@@ -34,14 +34,6 @@ public class DiaryObject implements Serializable{
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getEntry() {
-        return entry;
-    }
-
-    public void setEntry(String entry) {
-        this.entry = entry;
     }
 
     public Calendar getDate() {
