@@ -16,11 +16,9 @@ public class RouteObject implements Serializable {
     private String name;
     private DateFormat date;
     private ArrayList<DiaryObject> diaryList = new ArrayList<>();
-    private DiaryObject diaryObject;
 
     public RouteObject(String name) {
         this.name = name;
-        this.date = date;
     }
 
     public String getName() {
@@ -47,11 +45,4 @@ public class RouteObject implements Serializable {
         return diaryList;
     }
 
-    public DiaryObject getDiaryObject() {
-        return diaryObject;
-    }
-
-    public void setDiaryObject(DiaryObject diaryObject) {
-        this.diaryObject = diaryObject;
-    }
 }

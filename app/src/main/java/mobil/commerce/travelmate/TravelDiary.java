@@ -1137,6 +1137,7 @@ public class TravelDiary extends AppCompatActivity implements DatePickerDialog.O
         calendarView.refreshCalendar(date);
     }
 
+
     // showDatePickerDialog
     private void showDatePickerDialog(Calendar date)
     {
@@ -1848,8 +1849,12 @@ public class TravelDiary extends AppCompatActivity implements DatePickerDialog.O
                 File file = getDay(entry.get(Calendar.YEAR),
                         entry.get(Calendar.MONTH),
                         entry.get(Calendar.DATE));
-
-                Matcher matcher = pattern.matcher(AllRoutes.routes.get(routeIndex).getDiaryObject().getText());
+                Matcher matcher = pattern.matcher("");
+                for(DiaryObject d : AllRoutes.routes.get(routeIndex).getDiaryList()) {
+                    if (d.getDate().equals(currEntry)) {
+                        matcher = pattern.matcher(d.getText());
+                    }
+                }
                 if (matcher.find())
                     matches.add(DateFormat.getDateInstance(DateFormat.MEDIUM)
                             .format(entry.getTime()));
