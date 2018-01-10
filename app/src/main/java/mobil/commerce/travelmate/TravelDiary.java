@@ -43,12 +43,17 @@ import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Reader;
 
 import java.lang.reflect.Array;
@@ -75,7 +80,9 @@ import org.billthefarmer.view.CustomCalendarView;
 import org.billthefarmer.view.DayDecorator;
 import org.billthefarmer.view.DayView;
 
+import mobil.commerce.travelmate.objects.AllRoutes;
 import mobil.commerce.travelmate.objects.DiaryObject;
+import mobil.commerce.travelmate.objects.RouteObject;
 
 
 public class TravelDiary extends AppCompatActivity implements DatePickerDialog.OnDateSetListener,
@@ -171,7 +178,7 @@ public class TravelDiary extends AppCompatActivity implements DatePickerDialog.O
     private View edit;
     private final int REQUEST_CODE_ASK_PERMISSIONS=123;
 
-    private ArrayList<DiaryObject> diaryList = new ArrayList<>();
+    private int routeIndex = 0;
 
     // onCreate
     @Override
@@ -180,11 +187,11 @@ public class TravelDiary extends AppCompatActivity implements DatePickerDialog.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_traveldiary);
 
+        AllRoutes.routes.get(routeIndex).getDiaryList().clear();
+
         Intent intent = getIntent();
 
-        diaryList.clear();
-        diaryList = (ArrayList) intent.getSerializableExtra("diary");
-
+        routeIndex = (int) intent.getSerializableExtra("diary");
 
 
         textView = (EditText) findViewById(R.id.text);
@@ -1033,6 +1040,8 @@ public class TravelDiary extends AppCompatActivity implements DatePickerDialog.O
     {
         StringBuilder url = new
                 StringBuilder(Uri.fromFile(getCurrent()).toString());
+
+        Log.d(TAG, "Base URL: " + url.append(File.separator).toString());
         return url.append(File.separator).toString();
     }
 
@@ -1424,6 +1433,7 @@ public class TravelDiary extends AppCompatActivity implements DatePickerDialog.O
     {
         if (currEntry != null)
         {
+            Log.d(TAG,"Save!!!!");
             String text = textView.getText().toString();
 
             // Check for events
@@ -1431,14 +1441,32 @@ public class TravelDiary extends AppCompatActivity implements DatePickerDialog.O
 
             // Check for maps
             text = mapCheck(text);
+            //ArrayList diaryList = AllRoutes.routes.get(routeIndex).getDiaryList();
+            if(AllRoutes.routes.get(routeIndex).getDiaryList().size() == 0){
+                AllRoutes.routes.get(routeIndex).addDiaryObject(currEntry, text);
+                Log.d(TAG, "Neues DiaryObjekt: " + text + "; " + currEntry.toString());
+            } else {
+                boolean match = false;
+                for (DiaryObject d : AllRoutes.routes.get(routeIndex).getDiaryList()) {
+                    if (d.getDate().equals(currEntry)) {
+                        match = true;
+                        d.setText(text);
+                        Log.d(TAG, "Vorhandenes Erweitert: " + text);
+                    }
+                }
+                if(!match) {
+                    AllRoutes.routes.get(routeIndex).addDiaryObject(currEntry, text);
+                    Log.d(TAG, "Neues DiaryObjekt Match False: " + text + "; " + currEntry.toString());
+                }
+            }
 
             // Save text
-            save(text);
+            AllRoutes.saveRoutes();
         }
     }
 
-    // save
-    private void save(String text)
+
+    private void save1(String text)
     {
         File file = getFile();
         if (text.length() == 0)
@@ -1472,7 +1500,7 @@ public class TravelDiary extends AppCompatActivity implements DatePickerDialog.O
     }
 
     // read
-    private static String read(File file)
+    private static String read1(File file)
     {
         StringBuilder text = new StringBuilder();
         try
@@ -1524,18 +1552,26 @@ public class TravelDiary extends AppCompatActivity implements DatePickerDialog.O
         return null;
     }
 
-    // load
-    private void load()
-    {
-        String text = read(getFile());
-        textView.setText(text);
-        if (markdown)
-        {
+    private void load(){
+        Log.d(TAG,"LOAD!!!");
+        AllRoutes.loadRoutes();
+        textView.setText("");
+        //ArrayList<DiaryObject> diaryList = AllRoutes.routes.get(routeIndex).getDiaryList();
+        for(DiaryObject d : AllRoutes.routes.get(routeIndex).getDiaryList()){
+            Log.d(TAG,"gehe alle durch; " + d.getDate().toString());
+            if(d.getDate().equals(currEntry)){
+                Log.d(TAG, "Load Match! " + currEntry.toString());
+                textView.setText(d.getText());
+            }
+        }
+
+        if(markdown){
             dirty = false;
             loadMarkdown();
         }
         textView.setSelection(0);
     }
+
 
     // setDate
     private void setDate(Calendar date)
@@ -1600,7 +1636,7 @@ public class TravelDiary extends AppCompatActivity implements DatePickerDialog.O
     // changeDate
     private void changeDate(Calendar date)
     {
-        save();
+        //save();
         setDate(date);
         load();
     }
@@ -1813,7 +1849,7 @@ public class TravelDiary extends AppCompatActivity implements DatePickerDialog.O
                         entry.get(Calendar.MONTH),
                         entry.get(Calendar.DATE));
 
-                Matcher matcher = pattern.matcher(read(file));
+                Matcher matcher = pattern.matcher(AllRoutes.routes.get(routeIndex).getDiaryObject().getText());
                 if (matcher.find())
                     matches.add(DateFormat.getDateInstance(DateFormat.MEDIUM)
                             .format(entry.getTime()));

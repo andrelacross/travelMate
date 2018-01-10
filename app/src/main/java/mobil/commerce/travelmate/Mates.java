@@ -35,7 +35,7 @@ public class Mates extends Activity{
 
     public void init() {
         ListView matesListView = (ListView) findViewById(R.id.mates_listView);
-        final ImageButton btn_add = findViewById(R.id.btn_mate_add);
+        Button btn_add = findViewById(R.id.btn_mate_add);
 
         String[] mateNames = new String[mates.size()];
         for(int i = 0; i < mates.size(); i++){

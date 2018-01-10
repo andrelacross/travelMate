@@ -86,7 +86,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private String[] mLikelyPlaceAttributions;
     private LatLng[] mLikelyPlaceLatLngs;
 
-    private RouteObject route;
+    private int routeIndex = 0;
     private boolean planer = false;
 
     @Override
@@ -110,7 +110,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         Intent intent = getIntent();
-        route = (RouteObject) intent.getSerializableExtra("route");
+        routeIndex = (int) intent.getSerializableExtra("route");
+
         planer = (Boolean) intent.getSerializableExtra("planer");
 
         Button btn_diary = (Button) findViewById(R.id.btn_diary);
@@ -121,14 +122,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(MapsActivity.this, TravelDiary.class);
-                    intent.putExtra("diary", route.getDiaryList());
+                    intent.putExtra("diary", routeIndex);
                     startActivity(intent);
                 }
             });
         }
-
-
-
     }
 
     /**

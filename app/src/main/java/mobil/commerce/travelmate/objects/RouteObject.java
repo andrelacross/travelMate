@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by eiked on 13.12.2017.
@@ -15,6 +16,7 @@ public class RouteObject implements Serializable {
     private String name;
     private DateFormat date;
     private ArrayList<DiaryObject> diaryList = new ArrayList<>();
+    private DiaryObject diaryObject;
 
     public RouteObject(String name) {
         this.name = name;
@@ -37,16 +39,19 @@ public class RouteObject implements Serializable {
         this.date = date;
     }
 
-    public void addDiaryEtry(String diaryname) {
-        diaryList.add(new DiaryObject(diaryname));
+    public void addDiaryObject(Calendar date, String text) {
+        diaryList.add(new DiaryObject(date, text));
     }
 
-    public DiaryObject getDiary(int index){
-        return diaryList.get(index);
-    }
-
-    public ArrayList getDiaryList() {
+    public ArrayList<DiaryObject> getDiaryList() {
         return diaryList;
     }
 
+    public DiaryObject getDiaryObject() {
+        return diaryObject;
+    }
+
+    public void setDiaryObject(DiaryObject diaryObject) {
+        this.diaryObject = diaryObject;
+    }
 }

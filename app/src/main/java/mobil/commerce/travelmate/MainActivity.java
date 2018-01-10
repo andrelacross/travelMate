@@ -26,6 +26,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
+import mobil.commerce.travelmate.objects.AllRoutes;
 import mobil.commerce.travelmate.objects.RouteObject;
 
 public class MainActivity extends AppCompatActivity{
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity{
 
     private static final int ERROR_DIALOG_REQUEST = 9000;
 
-    private ArrayList<RouteObject> routes = new ArrayList<>();
+    //public static ArrayList<RouteObject> routes = AllRoutes.routes;
     private boolean mLocationPermissionsGranted;
     private final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
 
@@ -99,9 +100,9 @@ public class MainActivity extends AppCompatActivity{
         });
 
         ListView routeListView = (ListView) findViewById(R.id.listView_routes);
-        String[] routenames = new String[routes.size()];
+        String[] routenames = new String[AllRoutes.routes.size()];
         for(int i = 0; i < routenames.length; i++) {
-            routenames[i] = routes.get(i).getName();
+            routenames[i] = AllRoutes.routes.get(i).getName();
         }
 
         ListAdapter routesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, routenames);
@@ -111,7 +112,7 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent3 = new Intent(MainActivity.this, MapsActivity.class);
-                intent3.putExtra("route", routes.get(i));
+                intent3.putExtra("route", i);
                 intent3.putExtra("planer", true);
                 startActivity(intent3);
             }
@@ -120,10 +121,10 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private void addExampleRoutes() {
-        routes.clear();
-        routes.add(new RouteObject("Süd-Amerika"));
-        routes.add(new RouteObject("Schweden"));
-        routes.add(new RouteObject("Thailand"));
+        AllRoutes.routes.clear();
+        AllRoutes.routes.add(new RouteObject("Süd-Amerika"));
+        AllRoutes.routes.add(new RouteObject("Schweden"));
+        AllRoutes.routes.add(new RouteObject("Thailand"));
 
     }
 
@@ -162,7 +163,7 @@ public class MainActivity extends AppCompatActivity{
         switch (item.getItemId()){
 
             case R.id.reisetagebuch:
-                Intent intent= new Intent(this, TravelDiary.class );
+                Intent intent = new Intent(this, TravelDiary.class );
                 startActivity(intent);
                 return true;
 
