@@ -7,18 +7,37 @@
     android:layout_height="match_parent"
     tools:ignore="RtlHardcoded">
 
+    <Button
+        android:id="@+id/btn_yesterday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/markdown"
+        android:layout_toEndOf="@+id/markdown"
+        android:text="prev"
+        android:visibility="visible" />
+
+    <Button
+        android:id="@+id/btn_tomorrow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/accept"
+        android:layout_below="@+id/markdown"
+        android:text="next"
+        android:visibility="visible" />
+
     <ScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/btn_yesterday"
         android:fillViewport="true">
 
         <EditText
             android:id="@+id/text"
-            android:inputType="textCapSentences|textMultiLine"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="top" />
+            android:gravity="top"
+            android:inputType="textCapSentences|textMultiLine" />
 
     </ScrollView>
 
@@ -55,5 +74,7 @@
         android:layout_marginBottom="28dp"
         android:layout_marginRight="28dp"
         android:elevation="6dp" />
+
+
 
 </RelativeLayout>

@@ -48,10 +48,9 @@ public class MainActivity extends AppCompatActivity{
 
             addExampleRoutes();
             init();
-
         }
-
     }
+
 
     private void getLocationPermission(){
          /*

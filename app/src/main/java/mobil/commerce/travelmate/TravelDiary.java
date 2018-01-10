@@ -15,6 +15,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Spanned;
@@ -34,6 +35,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -176,6 +178,8 @@ public class TravelDiary extends AppCompatActivity implements DatePickerDialog.O
 
     private View accept;
     private View edit;
+    private Button btn_yesterday;
+    private Button btn_tomorrow;
     private final int REQUEST_CODE_ASK_PERMISSIONS=123;
 
     private int routeIndex = 0;
@@ -200,6 +204,8 @@ public class TravelDiary extends AppCompatActivity implements DatePickerDialog.O
 
         accept = findViewById(R.id.accept);
         edit = findViewById(R.id.edit);
+        btn_yesterday = findViewById(R.id.btn_yesterday);
+        btn_tomorrow = findViewById(R.id.btn_tomorrow);
 
         WebSettings settings = markdownView.getSettings();
         settings.setJavaScriptEnabled(true);
@@ -478,8 +484,10 @@ public class TravelDiary extends AppCompatActivity implements DatePickerDialog.O
             multiTouch = true;
 
         gestureDetector.onTouchEvent(event);
+
         return super.dispatchTouchEvent(event);
     }
+
 
     private void setListeners()
     {
@@ -671,6 +679,18 @@ public class TravelDiary extends AppCompatActivity implements DatePickerDialog.O
                 }
             });
         }
+        btn_yesterday.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currEntry.add(Calendar.DATE, -1);
+            }
+        });
+        btn_tomorrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currEntry.add(Calendar.DATE, 1);
+            }
+        });
     }
 
     // animateAccept
