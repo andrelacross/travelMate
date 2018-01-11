@@ -7,6 +7,32 @@
     android:layout_height="match_parent"
     tools:ignore="RtlHardcoded">
 
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/btn_yesterday"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:fillViewport="true">
+
+        <EditText
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/btn_yesterday"
+            android:layout_marginTop="10dp"
+            android:gravity="top"
+            android:inputType="textCapSentences|textMultiLine" />
+    </ScrollView>
+
+    <org.billthefarmer.markdown.MarkdownView
+        android:id="@+id/markdown"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <Button
         android:id="@+id/btn_yesterday"
         android:layout_width="wrap_content"
@@ -24,28 +50,6 @@
         android:layout_below="@+id/markdown"
         android:text="next"
         android:visibility="visible" />
-
-    <ScrollView
-        android:id="@+id/scroll"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/btn_yesterday"
-        android:fillViewport="true">
-
-        <EditText
-            android:id="@+id/text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="top"
-            android:inputType="textCapSentences|textMultiLine" />
-
-    </ScrollView>
-
-    <org.billthefarmer.markdown.MarkdownView
-        android:id="@+id/markdown"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
     <ImageButton
         android:id="@+id/edit"
@@ -74,7 +78,6 @@
         android:layout_marginBottom="28dp"
         android:layout_marginRight="28dp"
         android:elevation="6dp" />
-
 
 
 </RelativeLayout>
