@@ -8,13 +8,30 @@
     tools:ignore="RtlHardcoded">
 
     <ScrollView
-        android:id="@+id/scroll"
+        android:id="@+id/scroll_mark"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/btn_yesterday"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
         android:fillViewport="true">
+
+
+        <org.billthefarmer.markdown.MarkdownView
+            android:id="@+id/markdown"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="0dp"
+            android:visibility="gone" />
+    </ScrollView>
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_yesterday"
+        android:layout_centerHorizontal="true"
+        android:fillViewport="true">
+
 
         <EditText
             android:id="@+id/text"
@@ -22,23 +39,17 @@
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/btn_yesterday"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="0dp"
             android:gravity="top"
             android:inputType="textCapSentences|textMultiLine" />
+
     </ScrollView>
 
-    <org.billthefarmer.markdown.MarkdownView
-        android:id="@+id/markdown"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
     <Button
         android:id="@+id/btn_yesterday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/markdown"
-        android:layout_toEndOf="@+id/markdown"
         android:text="prev"
         android:visibility="visible" />
 
@@ -47,7 +58,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/accept"
-        android:layout_below="@+id/markdown"
         android:text="next"
         android:visibility="visible" />
 
@@ -78,6 +88,10 @@
         android:layout_marginBottom="28dp"
         android:layout_marginRight="28dp"
         android:elevation="6dp" />
+
+
+
+
 
 
 </RelativeLayout>

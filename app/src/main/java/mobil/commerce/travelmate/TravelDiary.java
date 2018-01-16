@@ -41,6 +41,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ScrollView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -385,6 +386,9 @@ public class TravelDiary extends AppCompatActivity implements DatePickerDialog.O
             case R.id.settings:
                 settings();
                 break;
+            case R.id.deleteAll:
+                deleteAll();
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -683,12 +687,16 @@ public class TravelDiary extends AppCompatActivity implements DatePickerDialog.O
             @Override
             public void onClick(View view) {
                 currEntry.add(Calendar.DATE, -1);
+                setDate(currEntry);
+                load();
             }
         });
         btn_tomorrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 currEntry.add(Calendar.DATE, 1);
+                setDate(currEntry);
+                load();
             }
         });
     }
@@ -1199,6 +1207,15 @@ public class TravelDiary extends AppCompatActivity implements DatePickerDialog.O
         Intent intent = new Intent(Intent.ACTION_EDIT);
         intent.setDataAndType(uri, "text/css");
         startActivity(intent);
+    }
+
+    //Options Delete complete Diary
+    private void deleteAll(){
+        Log.d(TAG, "Lösche Tagebuch");
+        textView.setText("");
+        AllRoutes.routes.get(routeIndex).getDiaryList().clear();
+        save();
+        load();
     }
 
     // settings
