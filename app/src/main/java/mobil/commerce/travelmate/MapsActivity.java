@@ -135,17 +135,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 View mView = getLayoutInflater().inflate(R.layout.search_mate_dialog, null);
                 final EditText search_name = (EditText) mView.findViewById(R.id.input_name);
                 final Button btn_ok = (Button) mView.findViewById(R.id.btn_ok);
+                mBuilder.setView(mView);
+                final android.app.AlertDialog dialog = mBuilder.create();
+
                 btn_ok.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        AllRoutes.routes.add(new RouteObject(search_name.getText().toString()));
-                        AllRoutes.saveRoutes();
-                        Toast.makeText(MapsActivity.this, "gespeichert", Toast.LENGTH_LONG).show();
+                        if(search_name.getText().toString().trim().length() == 0){
+                            Toast.makeText(MapsActivity.this, "Not a valid name", Toast.LENGTH_LONG).show();
+                        } else {
+                            AllRoutes.routes.add(new RouteObject(search_name.getText().toString()));
+                            AllRoutes.saveRoutes();
+                            Toast.makeText(MapsActivity.this, "gespeichert: " + search_name.getText(), Toast.LENGTH_LONG).show();
+                            Log.d(TAG, "name: " + search_name.getText());
+                            dialog.dismiss();
+                        }
                     }
                 });
-
-                mBuilder.setView(mView);
-                android.app.AlertDialog dialog = mBuilder.create();
                 dialog.show();
             }
         });

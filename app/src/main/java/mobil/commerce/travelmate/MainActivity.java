@@ -1,6 +1,8 @@
 package mobil.commerce.travelmate;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -124,6 +126,29 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
+        routeListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1, final int pos, long id) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder
+                        .setTitle("Erase Route?")
+                        .setMessage("Are you sure?")
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                AllRoutes.routes.remove(pos);
+                                AllRoutes.saveRoutes();
+                                Toast.makeText(MainActivity.this, "gelöscht", Toast.LENGTH_SHORT);
+                                init();
+                            }
+                        })
+                        .setNegativeButton("No", null)						//Do nothing on no
+                        .show();
+
+                return true;
+            }
+        });
     }
 
     private void addExampleRoutes() {
