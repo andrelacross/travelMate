@@ -24,6 +24,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.Manifest;
@@ -75,6 +76,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private Location mLastKnownLocation;
     private EditText mSearchText;
+    private EditText endText;
     // Keys for storing activity state.
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
@@ -97,8 +99,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mLastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
             mCameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
         }
+
         setContentView(R.layout.activity_maps);
         mSearchText =  (EditText) findViewById(R.id.input_search);
+        endText = (EditText) findViewById(R.id.end_text);
+        RelativeLayout relLaoyut2 = (RelativeLayout) findViewById(R.id.relLayout2);
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         mPlaceDetectionClient = Places.getPlaceDetectionClient(this, null);
 
@@ -110,13 +115,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         Intent intent = getIntent();
-        routeIndex = (int) intent.getSerializableExtra("route");
+        if(planer) {
+            routeIndex = (int) intent.getSerializableExtra("route");
+        }
 
         planer = (Boolean) intent.getSerializableExtra("planer");
+
+        Log.d(TAG,"Planer ist: " + planer);
 
         Button btn_diary = (Button) findViewById(R.id.btn_diary);
         btn_diary.setVisibility(View.INVISIBLE);
         if(planer) {
+            relLaoyut2.setVisibility(View.INVISIBLE);
+            mSearchText.setHint("Enter Address, City or Zip Code");
             btn_diary.setVisibility(View.VISIBLE);
             btn_diary.setOnClickListener(new View.OnClickListener() {
                 @Override
