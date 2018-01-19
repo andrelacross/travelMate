@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity{
         if(isServicesOK()){
             getLocationPermission();
 
-            addExampleRoutes();
+            //addExampleRoutes();
             init();
         }
     }
@@ -97,6 +97,13 @@ public class MainActivity extends AppCompatActivity{
                 startActivity(intent);
             }
         });
+
+        try{
+            AllRoutes.routes.clear();
+            AllRoutes.loadRoutes();
+        }catch(Exception e) {
+
+        }
 
         ListView routeListView = (ListView) findViewById(R.id.listView_routes);
         String[] routenames = new String[AllRoutes.routes.size()];
@@ -186,8 +193,14 @@ public class MainActivity extends AppCompatActivity{
             default:
                 return super.onOptionsItemSelected(item);
 
-
         }
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        init();
+        Toast.makeText(this, "Welcome Back", Toast.LENGTH_SHORT);
 
     }
 }

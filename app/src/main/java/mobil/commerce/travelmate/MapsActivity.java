@@ -50,6 +50,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import mobil.commerce.travelmate.objects.AllRoutes;
 import mobil.commerce.travelmate.objects.RouteObject;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -115,19 +116,45 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         Intent intent = getIntent();
+
+        planer = (Boolean) intent.getSerializableExtra("planer");
         if(planer) {
             routeIndex = (int) intent.getSerializableExtra("route");
         }
-
-        planer = (Boolean) intent.getSerializableExtra("planer");
 
         Log.d(TAG,"Planer ist: " + planer);
 
         Button btn_diary = (Button) findViewById(R.id.btn_diary);
         btn_diary.setVisibility(View.INVISIBLE);
+
+        Button btn_save = (Button) findViewById(R.id.btn_save);
+        btn_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.app.AlertDialog.Builder mBuilder = new android.app.AlertDialog.Builder(MapsActivity.this);
+                View mView = getLayoutInflater().inflate(R.layout.search_mate_dialog, null);
+                final EditText search_name = (EditText) mView.findViewById(R.id.input_name);
+                final Button btn_ok = (Button) mView.findViewById(R.id.btn_ok);
+                btn_ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        AllRoutes.routes.add(new RouteObject(search_name.getText().toString()));
+                        AllRoutes.saveRoutes();
+                        Toast.makeText(MapsActivity.this, "gespeichert", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+                mBuilder.setView(mView);
+                android.app.AlertDialog dialog = mBuilder.create();
+                dialog.show();
+            }
+        });
+
         if(planer) {
             relLaoyut2.setVisibility(View.INVISIBLE);
             mSearchText.setHint("Enter Address, City or Zip Code");
+            btn_save.setVisibility(View.INVISIBLE);
+
             btn_diary.setVisibility(View.VISIBLE);
             btn_diary.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -138,6 +165,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             });
         }
+
     }
 
     /**
