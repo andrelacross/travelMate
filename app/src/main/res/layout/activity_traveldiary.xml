@@ -50,7 +50,7 @@
         android:id="@+id/btn_yesterday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="prev"
+        android:text="Zurück"
         android:visibility="visible" />
 
     <Button
@@ -58,7 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/accept"
-        android:text="next"
+        android:text="Weiter"
         android:visibility="visible" />
 
     <ImageButton

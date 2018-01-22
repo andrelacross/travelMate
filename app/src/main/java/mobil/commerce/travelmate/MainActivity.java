@@ -34,7 +34,7 @@ import mobil.commerce.travelmate.objects.RouteObject;
 
 public class MainActivity extends AppCompatActivity{
 
-    private static int SPLASH_TIME_OUT = 4000;
+
 
     private static final String TAG = "MainActivity";
 
@@ -49,15 +49,15 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        int SPLASH_TIME_OUT = 4000;
         new Handler().postDelayed(new Runnable(){
             @Override
             public void run() {
-                Intent homeIndent = new Intent(MainActivity.this, homeActivity.class);
-                startActivity(homeIndent);
+                Intent welcomeIndent = new Intent(MainActivity.this, welcomeActivity.class);
+                startActivity(welcomeIndent);
                 finish();
             }
         },SPLASH_TIME_OUT);
-
 
         if(isServicesOK()){
             getLocationPermission();
@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity{
             //addExampleRoutes();
             init();
         }
+
     }
 
 

@@ -81,7 +81,6 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_welcome"
             android:theme="@style/FullscreenTheme" />
-        <activity android:name=".homeActivity"></activity>
     </application>
 
 </manifest>
