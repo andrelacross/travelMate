@@ -78,9 +78,9 @@ public class Mates extends Activity{
 
     private void loadMates() {
         //Beispielfreunde laden
-        mates.add(new MateObject("Name1", "name1@123.de"));
-        mates.add(new MateObject("Name2", "name2@abc.de"));
-        mates.add(new MateObject("Name3", "name3@xyz.de"));
+        mates.add(new MateObject("Rikkert Biemans", "rikkert@123.de"));
+        mates.add(new MateObject("Richard Batsbak", "richard@abc.de"));
+        mates.add(new MateObject("Gerrie van Boven", "gerrie3@xyz.de"));
     }
 
     private void saveMates() {

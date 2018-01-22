@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/markdown"
         android:layout_toEndOf="@+id/markdown"
-        android:text="prev"
+        android:text="Zurück"
         android:visibility="visible" />
 
     <Button
@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/accept"
         android:layout_below="@+id/markdown"
-        android:text="next"
+        android:text="Weiter"
         android:visibility="visible" />
 
     <ImageButton
