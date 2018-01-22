@@ -48,4 +48,9 @@
         android:showAsAction="ifRoom"
         android:title="Settings"
         />
+    <item
+        android:id="@+id/deleteAll"
+        android:showAsAction="ifRoom"
+        android:title="Delete All"
+        />
 </menu>
