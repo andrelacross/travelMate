@@ -63,9 +63,8 @@ public class MainActivity extends AppCompatActivity{
             getLocationPermission();
 
             //addExampleRoutes();
-            init();
         }
-
+        init();
     }
 
 
@@ -241,8 +240,8 @@ public class MainActivity extends AppCompatActivity{
         super.onResume();
         init();
         Toast.makeText(this, "Welcome Back", Toast.LENGTH_SHORT);
-
     }
+
 }
 
 

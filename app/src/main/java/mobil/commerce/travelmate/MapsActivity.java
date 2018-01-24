@@ -66,6 +66,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     // The entry point to the Fused Location Provider.
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private PlaceDetectionClient mPlaceDetectionClient;
+    private final int REQUEST_CODE_ASK_PERMISSIONS=123;
 
     private static final int DEFAULT_ZOOM = 15;
     // A default location (Sydney, Australia) and default zoom to use when location permission is
@@ -100,7 +101,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mLastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
             mCameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
         }
-
+        checkPermissions();
         setContentView(R.layout.activity_maps);
         mSearchText =  (EditText) findViewById(R.id.input_search);
         endText = (EditText) findViewById(R.id.end_text);
@@ -515,6 +516,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     }
+
+    private void checkPermissions() {
+        int hasWriteContactsPermission = checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS);
+            return;
+        }
+        Toast.makeText(getBaseContext(), "Permission is already granted", Toast.LENGTH_LONG).show();
+    }
+
+
+
 
     /**
      * Handles the result of the request for location permissions.
